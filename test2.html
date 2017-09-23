@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas</title>
+</head>
+<body>
+    <canvas id="tree" style="border: 2px solid rosybrown" width="400" height="500">
+
+    </canvas>
+
+    <script>
+
+        var bark = new Image();
+        bark.src = "b.png";
+        bark.onload = function () {
+            draw();
+        }
+
+        function createPath(context) {
+            context.beginPath();
+            //树的左侧
+            context.moveTo(-25,-50);
+            context.lineTo(-10,-80);
+            context.lineTo(-20,-80);
+            context.lineTo(-5,-110);
+            context.lineTo(-15,-110);
+            context.lineTo(0,-140);
+
+            //树的右侧
+            context.lineTo(15,-110);
+            context.lineTo(5,-110);
+            context.lineTo(20,-80);
+            context.lineTo(10,-80);
+            context.lineTo(25,-50);
+            context.closePath();
+
+
+        }
+
+        function createCurvePath(context) {
+            context.beginPath();
+            context.moveTo(0,0);
+            //第一条曲线
+            context.quadraticCurveTo(170,-50,260,-190);
+            //第二条曲线
+            context.quadraticCurveTo(310,-250,410,-250);
+            context.lineWidth = 48;
+//            context.strokeStyle = "#663300";
+
+
+
+            context.stroke();
+
+
+        }
+
+        function drawTree(context) {
+
+            //绘制阴影
+            context.save();
+            context.transform(1,0,-0.5,1,0,0);
+            context.scale(1,0.6);
+            context.fillStyle = "rgba(0,0,0,0.2)";
+            context.fillRect(-5,-50,10,50);
+            createPath(context);
+            context.fill();
+            context.restore();
+
+            createPath(context);
+            context.lineWidth = 3;
+            context.strokeStyle = "#663300";
+            context.lineJoin = 'round';
+            context.stroke();
+            context.fillStyle = "green";
+            context.fill();
+
+            context.fillStyle = "#663300";
+            //绘制树干
+            context.drawImage(bark,-5,-50,10,50);
+
+        }
+
+        function draw() {
+            var canvas = document.getElementById('tree');
+            var context = canvas.getContext('2d');
+            context.save();
+            context.translate(130,250);
+            drawTree(context);
+
+            context.restore();
+
+            context.translate(-10,350);
+
+            //绘制小路
+            var granvel = new Image();
+            granvel.src = 'a.jpg';
+            granvel.onload = function () {
+                context.strokeStyle = context.createPattern(granvel,"repeat");
+                createCurvePath(context);
+            }
+
+            context.restore();
+
+            context.save();
+            context.translate(300,140);
+            context.scale(2,2);
+            drawTree(context);
+            context.restore();
+
+            drawText(context);
+        }
+
+        function drawText(context) {
+            context.save();
+            context.font = "50px impact";
+            context.fillStyle = "#ff3400";
+            context.textAlign = "center";
+
+            context.shadowColor = "rgba(0,0,0,0.2)";
+            context.shadowOffsetX = 10;
+            context.shadowOffsetY = -5;
+
+            context.fillText("树和羊肠小道",200,-280,400);
+            context.restore();
+        }
+
+//        window.addEventListener('load',drawTree,true);
+    </script>
+</body>
+</html>

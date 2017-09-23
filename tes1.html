@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>my canvas</title>
+</head>
+<body>
+<!-- canvs绘制直线 -->
+    <canvas id="canvas_line" width="300" height="300" style="border:5px solid coral; background: aquamarine">
+
+    </canvas>
+
+    <script>
+        function drawLines() {
+            var canvas = document.getElementById('canvas_line');
+            var context = canvas.getContext('2d');
+            context.strokeStyle = "#ff5952";
+            context.lineWidth = 10;
+            context.beginPath();
+            context.moveTo(100,100);
+            context.lineTo(300,300);
+            context.stroke();
+
+            context.strokeStyle = "#ff4356";
+            context.lineWidth = 19;
+            context.beginPath();
+            context.moveTo(300,300);
+            context.lineTo(260,20);
+            context.stroke();
+        }
+
+        window.addEventListener('load',drawLines,true);
+
+    </script>
+</body>
+</html>
